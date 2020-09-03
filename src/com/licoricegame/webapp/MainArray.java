@@ -3,51 +3,92 @@ package com.licoricegame.webapp;
 import com.licoricegame.webapp.model.Resume;
 import com.licoricegame.webapp.storage.ArrayStorage;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Time;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 
 public class MainArray {
     static ArrayStorage arrayStorage = new ArrayStorage();
+    private static long TIMEOUT;
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
-        Resume r1 = new Resume();
-        r1.setUuid("uuid1");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        Resume r2 = new Resume();
-        r2.setUuid("uuid2");
+        Resume r;
 
-        Resume r3 = new Resume();
-        r3.setUuid("uuid3");
+        while(true){
 
-        Resume r4 = new Resume();
-        r4.setUuid("uuid4");
+            System.out.println("Введите одну из команд:\n /list\n /save\n /delete\n /get\n /update\n /clear\n /exit\n");
+            String[] params = reader.readLine().trim().toLowerCase().split("\n");
 
+            if(params.length < 1 || params.length > 2){
+                System.out.println("Неверная команда");
+                continue;
+            }
 
-        arrayStorage.save(r1);
-        arrayStorage.save(r2);
-        arrayStorage.save(r3);
-        arrayStorage.save(r4);
+            String uuid = null;
+            if(params.length == 2){
+                uuid = params[1].intern();
+            }
 
+            switch(params[0]){
+                case "list":
+                    TIMEOUT = System.nanoTime();
+                    printAll();
+                    break;
+                case "size":
+                    TIMEOUT = System.nanoTime();
+                    System.out.println(arrayStorage.size());
+                    break;
+                case "save":
+                    TIMEOUT = System.nanoTime();
+                    r = new Resume(uuid);
+                    arrayStorage.save(r);
+                    printAll();
+                    break;
+                case "update":
+                    TIMEOUT = System.nanoTime();
+                    r = new Resume(uuid);
+                    arrayStorage.update(r);
+                    printAll();
+                    break;
+                case "delete":
+                    TIMEOUT = System.nanoTime();
+                    arrayStorage.delete(uuid);
+                    printAll();
+                    break;
+                case "get":
+                    TIMEOUT = System.nanoTime();
+                    System.out.println(arrayStorage.get(uuid));
+                    printAll();
+                    break;
+                case "clear":
+                    TIMEOUT = System.nanoTime();
+                    arrayStorage.clear();
+                    printAll();
+                    break;
+                case "exit":
+                    return;
+                default:
+                    System.out.println("Неверная команда");
+                    break;
 
-        System.out.println(arrayStorage.get(r1.getUuid()));
-        System.out.println(arrayStorage.size());
-        System.out.println(arrayStorage.get("dummy "));
+            }
 
-        printAll();
-        arrayStorage.delete(r1.getUuid());
-        printAll();
-        arrayStorage.getAll();
-        printAll();
-        arrayStorage.clear();
-        printAll();
-        arrayStorage.size();
-        printAll();
-        arrayStorage.getAll();
-
+        }
 
     }
+
 
     private static void printAll() {
         Resume[] all = arrayStorage.getAll();
         for (Resume r : arrayStorage.getAll()) System.out.println(r);
     }
 }
+

@@ -6,6 +6,9 @@ public class Resume {
 
 
     public String uuid;
+
+    public Resume(String uuid) {
+    }
     //Уникальный идент-ор
 
     public String getUuid() {

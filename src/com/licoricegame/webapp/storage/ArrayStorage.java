@@ -2,16 +2,22 @@ package com.licoricegame.webapp.storage;
 
 import com.licoricegame.webapp.model.Resume;
 
+import java.util.Arrays;
+
 public class ArrayStorage {
+
+    public static final int STORAGE_LIMIT = 10000;
 
 
     //База резюме в кол-ве 10000 штук.
     //Если резюме меньше, то остальные null
 
-    Resume[] storage = new Resume[10000];
+    Resume[] storage = new Resume[STORAGE_LIMIT];
 
     //Размер ТОЛЬКО non-null в массиве (где есть резюме)
     int size = 0;
+
+
 
 
     //Сохранить резюме
@@ -40,9 +46,7 @@ public class ArrayStorage {
 
     //Очистить все резюме
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -75,11 +79,7 @@ public class ArrayStorage {
 
     //Получить ВСЕ резюме
     public Resume[] getAll() {
-        Resume[] result = new Resume[size];
-        for (int i = 0; i < size; i++) {
-            result[i] = storage[i];
-        }
-        return result;
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     //Получить количество резюме
@@ -97,6 +97,4 @@ public class ArrayStorage {
         }
         return -1;
     }
-
-
 }
