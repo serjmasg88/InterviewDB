@@ -4,7 +4,7 @@ import com.licoricegame.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
 
     public static final int STORAGE_LIMIT = 10000;
 
@@ -90,7 +90,7 @@ public class ArrayStorage {
     private int getIndex(String uuid) {
 
         for (int i = 0; i < size; i++) {
-            if (uuid == storage[i].getUuid()) {
+            if (uuid.equals(storage[i].getUuid())) {
 
                 return i;
             }

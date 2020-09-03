@@ -2,6 +2,7 @@ package com.licoricegame.webapp;
 
 import com.licoricegame.webapp.model.Resume;
 import com.licoricegame.webapp.storage.ArrayStorage;
+import com.licoricegame.webapp.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 
 
 public class MainArray {
-    static ArrayStorage arrayStorage = new ArrayStorage();
+    private final static Storage arrayStorage = new ArrayStorage();
     private static long TIMEOUT;
 
     public static void main(String[] args) throws IOException {
