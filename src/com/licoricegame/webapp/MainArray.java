@@ -7,14 +7,10 @@ import com.licoricegame.webapp.storage.Storage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Time;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 
 public class MainArray {
-    private final static Storage arrayStorage = new ArrayStorage();
+    private final static Storage arrayStorage = (Storage) new ArrayStorage();
     private static long TIMEOUT;
 
     public static void main(String[] args) throws IOException {
@@ -86,9 +82,7 @@ public class MainArray {
 
     }
 
-
     private static void printAll() {
-        Resume[] all = arrayStorage.getAll();
         for (Resume r : arrayStorage.getAll()) System.out.println(r);
     }
 }
